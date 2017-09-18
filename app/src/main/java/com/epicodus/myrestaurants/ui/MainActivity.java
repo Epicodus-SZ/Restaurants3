@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //            saveLocationToFirebase(location);
 
-            Intent intent = new Intent(MainActivity.this, Res`taurantsActivity.class);
+            Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
             intent.putExtra("location", location);
             startActivity(intent);
         }
