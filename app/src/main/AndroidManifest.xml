@@ -27,6 +27,7 @@
                 android:value="com.epicodus.myrestaurants.ui.MainActivity"></meta-data>
         </activity>
         <activity android:name=".ui.RestaurantDetailActivity"></activity>
+        <activity android:name=".ui.SavedRestaurantListActivity"></activity>
     </application>
 
 </manifest>
