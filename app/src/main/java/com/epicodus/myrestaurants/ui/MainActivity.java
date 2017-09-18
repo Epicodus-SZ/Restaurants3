@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String mRecentAddress;
 
     private DatabaseReference mSearchedLocationReference;
+    private ValueEventListener mSearchedLocationReferenceListener;
 
 
     public static final String TAG = RestaurantsActivity.class.getSimpleName();
@@ -42,27 +43,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        mSearchedLocationReference = FirebaseDatabase
-                .getInstance()
-                .getReference()
-                .child(Constants.FIREBASE_CHILD_SEARCHED_LOCATION);
+//        mSearchedLocationReference = FirebaseDatabase
+//                .getInstance()
+//                .getReference()
+//                .child(Constants.FIREBASE_CHILD_SEARCHED_LOCATION);
 
+//        mSearchedLocationReferenceListener =
+//                mSearchedLocationReference.addValueEventListener(new ValueEventListener() { //attach listener
 
-        mSearchedLocationReference.addValueEventListener(new ValueEventListener() { //attach listener
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
-                for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
-                    String location = locationSnapshot.getValue().toString();
-                    Log.d("Locations updated", "location: " + location); //log
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
-
-            }
-        });
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+//                for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
+//                    String location = locationSnapshot.getValue().toString();
+//                    Log.d("Locations updated", "location: " + location); //log
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+//
+//            }
+//        });
 
 
 
@@ -77,12 +78,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Typeface ostrichFont = Typeface.createFromAsset(getAssets(), "fonts/ostrichregular.ttf");
         mAppNameTextView.setTypeface(ostrichFont);
 
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
-//        if (mRecentAddress != null) {
-//            mLocationEditText.setText(mRecentAddress);
-//            putCursorAtEnd();
-//        }
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+        if (mRecentAddress != null) {
+            mLocationEditText.setText(mRecentAddress);
+            putCursorAtEnd();
+        }
 
 
 
@@ -105,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         Log.v(TAG, "The OnDestroy Method Fired");
+        mSearchedLocationReference.removeEventListener(mSearchedLocationReferenceListener);
     }
 
     @Override
@@ -123,11 +125,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == mFindRestaurantsButton) {
             String location = mLocationEditText.getText().toString();
-//            if(!(location).equals("")) {
-//                addToSharedPreferences(location); //add Validation here, entering alpha characters crashes the app
-//            }
+            if(!(location).equals("")) {
+                addToSharedPreferences(location); //add Validation here, entering alpha characters crashes the app
+            }
 
-            saveLocationToFirebase(location);
+//            saveLocationToFirebase(location);
 
             Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
             intent.putExtra("location", location);
