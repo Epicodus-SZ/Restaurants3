@@ -1,14 +1,8 @@
 package com.epicodus.myrestaurants;
 
 import android.os.Build;
-import android.widget.ListView;
 
-import com.epicodus.myrestaurants.ui.RestaurantsActivity;
-
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -26,12 +20,12 @@ public class RestaurantsActivityTest {
 
     // Need to update our automation tests to use the recyclerView
 
-//    private RestaurantsActivity activity;
+//    private RestaurantsListActivity activity;
 //    private ListView mRestaurantListView;
 //
 //    @Before
 //    public void setup() {
-//        activity = Robolectric.setupActivity(RestaurantsActivity.class);
+//        activity = Robolectric.setupActivity(RestaurantsListActivity.class);
 //        mRestaurantListView = (ListView) activity.findViewById(R.id.listView);
 //    }
 //

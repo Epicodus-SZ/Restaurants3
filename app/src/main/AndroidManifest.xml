@@ -16,7 +16,7 @@
             android:windowSoftInputMode="adjustResize">
 
         </activity>
-        <activity android:name=".ui.RestaurantsActivity">
+        <activity android:name=".ui.RestaurantsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.epicodus.myrestaurants.ui.MainActivity" />
