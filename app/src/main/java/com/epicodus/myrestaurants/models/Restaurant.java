@@ -16,6 +16,9 @@ public class Restaurant {
     double latitude;
     double longitude;
     List<String> categories = new ArrayList<>();
+    // This is essentially the Restaurant ID
+    // We're using the term pushId because that's what Firebase wants
+    private String pushId;
 
     public Restaurant() {}
 
@@ -67,5 +70,13 @@ public class Restaurant {
         return categories;
     }
 
+    // This next 2 methods are created to find the specific Restaurant in Firebase
+    //
+    public String getPushId() {
+        return pushId;
+    }
 
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
 }  //end of class

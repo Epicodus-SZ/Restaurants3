@@ -2,6 +2,7 @@ package com.epicodus.myrestaurants.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 /**
@@ -47,8 +49,21 @@ public class FirebaseRestaurantViewHolder extends RecyclerView.ViewHolder implem
         TextView categoryTextView = (TextView) mView.findViewById(R.id.categoryTextView);
         TextView ratingTextView = (TextView) mView.findViewById(R.id.ratingTextView);
 
+
+
+        //This is where the code to show the RecyclerView for *My Saved restaurants*
+
+        //Validation code to insure there is an image
+        String imageToLoad;
+        if(restaurant.getImageUrl().isEmpty()){
+            // Uri.parse("android.resource://your.package.name/" + R.drawable.sample_1);
+            imageToLoad = "android.resource://com.epicodus.myrestaurants/" + R.drawable.placeholder;
+        } else {
+            imageToLoad = restaurant.getImageUrl();
+        }
+
         Picasso.with(mContext)
-                .load(restaurant.getImageUrl())
+                .load(Uri.parse(imageToLoad))
                 .resize(MAX_WIDTH, MAX_HEIGHT)
                 .centerCrop()
                 .into(restaurantImageView);

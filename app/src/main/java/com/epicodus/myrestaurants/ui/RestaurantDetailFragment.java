@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.epicodus.myrestaurants.Constants;
 import com.epicodus.myrestaurants.R;
 import com.epicodus.myrestaurants.models.Restaurant;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -53,7 +55,18 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
         View view = inflater.inflate(R.layout.fragment_restaurant_detail, container, false);
         ButterKnife.bind(this, view);
 
-        Picasso.with(view.getContext()).load(mRestaurant.getImageUrl()).into(mImageLabel);
+        //this is where the restaurant info is getting created for the pager view
+
+        //Validation code to insure there is an image
+        String imageToLoad;
+        if(mRestaurant.getImageUrl().isEmpty()){
+            // Uri.parse("android.resource://your.package.name/" + R.drawable.sample_1);
+            imageToLoad = "android.resource://com.epicodus.myrestaurants/" + R.drawable.placeholder;
+        } else {
+            imageToLoad = mRestaurant.getImageUrl();
+        }
+
+        Picasso.with(view.getContext()).load(imageToLoad).into(mImageLabel);
 
         mNameLabel.setText(mRestaurant.getName());
         mCategoriesLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getCategories()));
@@ -73,10 +86,23 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
 
         if (view == mSaveRestaurantButton) {
+
+            //This gets our authenticated user object
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String uid = user.getUid(); // and getting their UID
+
+            // This makes a new UserBranch.
             DatabaseReference restaurantRef = FirebaseDatabase
                     .getInstance()
-                    .getReference(Constants.FIREBASE_CHILD_RESTAURANTS);
-            restaurantRef.push().setValue(mRestaurant);
+                    .getReference(Constants.FIREBASE_CHILD_RESTAURANTS)
+                    .child(uid); // This last method makes a new branch/node in our DB, a branch for each user.
+
+            DatabaseReference pushRef = restaurantRef.push();  // This make a new Random GUID for this restaurant to be saved
+            String pushId = pushRef.getKey(); // This makes pushId equal to our new GUID
+            mRestaurant.setPushId(pushId);  // This makes the current restaurant object have the correct PushId
+            pushRef.setValue(mRestaurant);  // This saves the object to Firebase
+
+            // Show a toast to let the user know the restaurant was saved
             Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }
 

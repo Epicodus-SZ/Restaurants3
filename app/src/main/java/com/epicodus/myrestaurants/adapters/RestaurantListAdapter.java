@@ -74,7 +74,19 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         }
 
         public void bindRestaurant(Restaurant restaurant) {
-            Picasso.with(mContext).load(restaurant.getImageUrl()).into(mRestaurantImageView);
+
+            //this is the Recycler View
+
+            //Validation code to insure there is an image
+            String imageToLoad;
+            if(restaurant.getImageUrl().isEmpty()){
+                // Uri.parse("android.resource://your.package.name/" + R.drawable.sample_1);
+                imageToLoad = "android.resource://com.epicodus.myrestaurants/" + R.drawable.placeholder;
+            } else {
+                imageToLoad = restaurant.getImageUrl();
+            }
+
+            Picasso.with(mContext).load(imageToLoad).into(mRestaurantImageView);
             mNameTextView.setText(restaurant.getName());
             mCategoryTextView.setText(restaurant.getCategories().get(0));
             mRatingTextView.setText("Rating: " + restaurant.getRating() + "/5");

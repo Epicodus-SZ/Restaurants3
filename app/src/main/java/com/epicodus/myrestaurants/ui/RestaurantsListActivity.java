@@ -84,8 +84,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                addToSharedPreferences(query);
-                getRestaurants(query);
+
+                try {
+                    getRestaurants(query);
+                    Log.d(TAG, "The query string is: " + query);
+                    addToSharedPreferences(query);
+                } catch (Exception e) {
+                    Log.d(TAG, "OOOops somethingbad happened");
+                    e.printStackTrace();
+                }
                 return false;
             }
 

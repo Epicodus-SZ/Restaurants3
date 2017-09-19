@@ -3,7 +3,9 @@ package com.epicodus.myrestaurants.services;
 import android.util.Log;
 
 import com.epicodus.myrestaurants.Constants;
+import com.epicodus.myrestaurants.R;
 import com.epicodus.myrestaurants.models.Restaurant;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,8 +66,18 @@ public class YelpService {
                     String website = restaurantJSON.getString("url");
                     double rating = restaurantJSON.getDouble("rating");
                     String imageUrl = restaurantJSON.getString("image_url");
-                    //double latitude = 33.333;
-                    //double longitude = -122.2222;
+
+                    //Adding code to insure there is an image...as some Yelp businesses
+                    // do not have images in theDB
+
+                    //String imageUrl;
+//                    if (restaurantJSON.getString("image_url").isEmpty()) {
+//                        imageUrl = "https://www.zaske.com/images/me.png";
+//                        // iview.setImageResource(R.drawable.placeholder);
+//                    } else{
+//                        imageUrl = restaurantJSON.getString("image_url");
+//                    }
+//
                     double latitude = restaurantJSON.getJSONObject("coordinates")
                             .getDouble("latitude");
                     double longitude = restaurantJSON.getJSONObject("coordinates")
