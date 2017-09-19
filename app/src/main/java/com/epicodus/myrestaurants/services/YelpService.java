@@ -26,15 +26,10 @@ import okhttp3.Response;
 
 public class YelpService {
     public static void findRestaurants(String location, Callback callback) {
-        // OkHttpOAuthConsumer consumer = new OkHttpOAuthConsumer(Constants.YELP_CONSUMER_KEY, Constants.YELP_CONSUMER_SECRET);
 
-        // consumer.setTokenWithSecret(Constants.YELP_TOKEN, Constants.YELP_TOKEN_SECRET);
 
         OkHttpClient client = new OkHttpClient();
 
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(new SigningInterceptor(consumer))
-//                .build();
 
         //Example using strings.xml
         // HttpUrl.Builder urlBuilder = HttpUrl.parse(getResources().).newBuilder();
@@ -43,11 +38,6 @@ public class YelpService {
         urlBuilder.addQueryParameter(Constants.YELP_LOCATION_QUERY_PARAMETER, location);
         String url = urlBuilder.build().toString();
 
-
-        // URL should end up looking like this: "https://api.yelp.com/v3/businesses/search?term=food&location=98101
-        Log.v("The URL is: ", url);
-        Log.v("Steve's middle name is: ", url);
-        Log.v("The URL is: ", url);
 
         Request request= new Request.Builder()
                 .header("Authorization", "Bearer " + Constants.YELP_TOKEN)

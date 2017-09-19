@@ -1,6 +1,10 @@
+## How to reproduce your API key to run this app
+
+1. ADD YELP TOKEN TO GRADLE.PROPERTIES: Put your Yelp Token in the file gradle.properties looking like this `YelpToken = "o50T7xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxcx"`
+
+
 Tracking API Key strings
 
-1. ADD SECRETS TO GRADLE.PROPERTIES: Put your API key values in the file gradle.properties looking like this `StevesLastName = "Zaske"`
 2. ADD GRADLE.PROPERTIES TO .GITIGNORE: Make sure this file is in your .gitignore file.
 *You might want to email yourself a copy of the gradle.properties file, so you can reproduce the app.*
 3. EDIT BUILD.GRADLE FILE: Then add a line in your build.gradle file (Module:app) that looks like this
@@ -27,3 +31,5 @@ Tracking API Key strings
  YelpToken = "o50T7xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxcx"
  YelpTokenSecret = "Bearer"
  StevesLastName = "Zaske"
+
+ ##
