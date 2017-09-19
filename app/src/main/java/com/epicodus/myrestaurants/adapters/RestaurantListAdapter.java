@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,8 +28,12 @@ import butterknife.ButterKnife;
  */
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
+    private static final int ITEM = 0;
+    private static final int LOADING = 1;
+
     private ArrayList<Restaurant> mRestaurants = new ArrayList<>();
     private Context mContext;
+    private boolean isLoadingAdded = false;
 
     public RestaurantListAdapter(Context context, ArrayList<Restaurant> restaurants) {
         mContext = context;
@@ -49,8 +54,69 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public int getItemCount() {
-        return mRestaurants.size();
+
+        return mRestaurants ==null ? 0 : mRestaurants.size();
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (position == mRestaurants.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
+    }
+
+    public void add(Restaurant mc) {
+        mRestaurants.add(mc);
+        notifyItemInserted(mRestaurants.size() - 1);
+    }
+
+    public void addAll(List<Restaurant> mcList) {
+        for (Restaurant mc : mcList) {
+            add(mc);
+        }
+    }
+
+    public void remove(Restaurant city) {
+        int position = mRestaurants.indexOf(city);
+        if (position > -1) {
+            mRestaurants.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void clear() {
+        isLoadingAdded = false;
+        while (getItemCount() > 0) {
+            remove(getItem(0));
+        }
+    }
+
+    public boolean isEmpty() {
+        return getItemCount() == 0;
+    }
+
+    public void addLoadingFooter() {
+        isLoadingAdded = true;
+        add(new Restaurant());
+    }
+
+    public void removeLoadingFooter() {
+        isLoadingAdded = false;
+
+        int position = mRestaurants.size() - 1;
+        Restaurant item = getItem(position);
+
+        if (item != null) {
+            mRestaurants.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public Restaurant getItem(int position) {
+        return mRestaurants.get(position);
+    }
+
+
+
+
 
     ///////////////
     //This is our View Holder Class
