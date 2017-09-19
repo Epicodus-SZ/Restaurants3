@@ -34,11 +34,8 @@ android {
 
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'YELP_CONSUMER_KEY', YelpConsumerKey
-        it.buildConfigField 'String', 'YELP_CONSUMER_SECRET', YelpConsumerSecret
         it.buildConfigField 'String', 'YELP_TOKEN', YelpToken
-        it.buildConfigField 'String', 'YELP_TOKEN_SECRET', YelpTokenSecret
-        it.buildConfigField 'String', 'STEVES_LAST_NAME', StevesLastName
+
     }
 
     repositories {
