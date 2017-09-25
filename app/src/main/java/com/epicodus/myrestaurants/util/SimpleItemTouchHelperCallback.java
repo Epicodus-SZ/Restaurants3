@@ -4,11 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
+import com.epicodus.myrestaurants.ui.RestaurantsListActivity;
+
 /**
  * Created by Guest on 9/25/17.
  */
 
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
+    public static final String TAG = RestaurantsListActivity.class.getSimpleName();
     private final ItemTouchHelperAdapter mAdapter;
 
     //  This constructor takes an ItemTouchHelperAdapter parameter. When implemented in
@@ -52,7 +55,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source,
                           RecyclerView.ViewHolder target) {
-        Log.d("Zaske Test", "onMove: Something moved");
+        Log.d("Zaske Test", "onMove: old pos: " + source.getOldPosition() + ", new pos:" + target.getPosition());
         if (source.getItemViewType() != target.getItemViewType()) {
             return false;
         }
@@ -66,6 +69,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+        Log.d(TAG, "onSwiped: You destroyed it");
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 }

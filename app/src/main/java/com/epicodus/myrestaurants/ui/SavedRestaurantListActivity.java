@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +28,8 @@ import butterknife.ButterKnife;
  */
 
 public class SavedRestaurantListActivity extends AppCompatActivity implements OnStartDragListener {
-    private DatabaseReference mRestaurantReference;
+
+    // private DatabaseReference mRestaurantReference;
 
     // old code
     //private FirebaseRecyclerAdapter<Restaurant, FirebaseRestaurantViewHolder> mFirebaseAdapter;
@@ -53,28 +55,18 @@ public class SavedRestaurantListActivity extends AppCompatActivity implements On
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
 
-        mRestaurantReference = FirebaseDatabase
+        Query query = FirebaseDatabase
                 .getInstance()
                 .getReference(Constants.FIREBASE_CHILD_RESTAURANTS)
-                .child(uid);
-
-//        mFirebaseAdapter = new FirebaseRecyclerAdapter<Restaurant, FirebaseRestaurantViewHolder>
-//                (Restaurant.class, R.layout.restaurant_list_item_drag, FirebaseRestaurantViewHolder.class,
-//                        mRestaurantReference) {
-//
-//            @Override
-//            protected void populateViewHolder(FirebaseRestaurantViewHolder viewHolder,
-//                                              Restaurant model, int position) {
-//                viewHolder.bindRestaurant(model);
-//            }
-//        };
+                .child(uid)
+                .orderByChild(Constants.FIREBASE_QUERY_INDEX);
 
 
         // (Class<Restaurant> modelClass, int modelLayout, Class<FirebaseRestaurantViewHolder> viewHolderClass,
         // Query ref, OnStartDragListener onStartDragListener, Context context)
         mFirebaseAdapter = new FirebaseRestaurantListAdapter(Restaurant.class,
                 R.layout.restaurant_list_item_drag, FirebaseRestaurantViewHolder.class,
-                mRestaurantReference, this, this);
+                query, this, this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mFirebaseAdapter);
